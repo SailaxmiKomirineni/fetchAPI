@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+        let container = document.createElement('div')
+        let btn = document.createElement('button')
+
+        container.style.display = 'flex'
+        container.style.flexDirection = 'column'
+        container.style.justifyContent = 'center'
+        container.style.alignItems = 'center'
+
+        btn.innerText = "Get Product Details"
+        btn.style.backgroundColor = "blue"
+        btn.style.color = "#fff"
+        btn.style.padding = "10px"
+        btn.style.fontSize = "20px"
+        btn.style.border = "none"
+        btn.style.borderRadius = "4px"
+        btn.addEventListener("click", (e)=>{
+            fetch('https://fakestoreapi.com/products')
+                .then(response => response.json())
+                .then(json => {
+                    console.log(json);
+                    const products = json
+
+                    for(let i=0; i<products.length; i++){
+                        let card = document.createElement('div')
+                        let cardImg = document.createElement('div')
+                        let cardContent = document.createElement('div')
+                        let img = document.createElement('img')
+                        let title = document.createElement('h2')
+                        let description = document.createElement('p') 
+                        let price = document.createElement('b') 
+                        let rating = document.createElement('p') 
+                        let buy = document.createElement('button') 
+
+                        card.style.width = "80vw"
+                        card.style.display = 'flex'
+                        card.style.border = "1px solid #000"
+                        card.style.padding = "20px"
+                        card.style.margin = "10px"
+                        card.style.borderRadius = "10px"
+                        card.style.fontFamily = "sans-serif"
+
+                        cardImg.style.display = "flex"
+                        cardImg.style.alignItems = "center"
+                        cardImg.style.justifyContent = "center"
+
+                        img.src = products[i].image
+                        img.style.width = "200px"
+                        img.style.height = "200px"
+                        img.style.marginRight = "20px"
+
+                        title.textContent = products[i].title
+                        description.textContent = products[i].description
+                        price.textContent = '$' + products[i].price
+                        price.style.fontSize = '20px'
+                        rating.textContent = "Rating : " + products[i].rating.rate + "/5"
+                        rating.style.color = "#c75128"
+
+                        buy.textContent = "Buy Now"
+                        buy.style.color = "#fff"
+                        buy.style.backgroundColor = "#0d6efd"
+                        buy.style.border = "none"
+                        buy.style.padding = "10px 30px"
+                        buy.style.borderRadius = "6px"
+                        buy.style.fontSize = '20px'
+
+                        container.appendChild(card)
+                        card.appendChild(cardImg)
+                        cardImg.appendChild(img)
+                        card.appendChild(cardContent)
+                        cardContent.appendChild(title)
+                        cardContent.appendChild(description)
+                        cardContent.appendChild(price)
+                        cardContent.appendChild(rating)
+                        cardContent.appendChild(buy)   
+                    }
+                })
+        })
+        
+        
+        container.appendChild(btn)
+        document.body.appendChild(container)
+    </script>
+</body>
+</html>
